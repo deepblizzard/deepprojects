@@ -41,7 +41,7 @@ export const WorkspaceIdClient = () => {
       <Analytics data={workspaceAnalytics} />
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <TaskList data={tasks.documents.splice(0, 4)} total={tasks.total} />
+        <TaskList data={tasks.documents.slice(0, 4)} total={tasks.total} />
         <ProjectList data={projects.documents} total={projects.total} />
         <MemberList data={members.documents} total={members.total} />
       </div>
@@ -80,7 +80,8 @@ export const TaskList = ({ data, total }: TaskListProps) => {
                     <p className="truncate text-lg font-medium">{task.name}</p>
 
                     <div className="flex items-center gap-x-2">
-                      <p>{task.project?.name}</p>
+                      {/* Safely guard access to project to avoid TypeScript error */}
+                      <p>{('project' in task && task.project?.name) ?? 'No Project'}</p>
 
                       <div aria-hidden className="size-1 rounded-full bg-neutral-300" />
 
