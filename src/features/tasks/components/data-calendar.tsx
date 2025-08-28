@@ -58,8 +58,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
     title: task.name,
-    project: task.project,
-    assignee: task.assignee,
+    project: task.projectId,   // ✅ use projectId but still call it "project"
+    assignee: task.assigneeId, // ✅ use assigneeId but still call it "assignee"
     status: task.status,
     id: task.$id,
   }));
@@ -86,7 +86,13 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
       }}
       components={{
         eventWrapper: ({ event }) => (
-          <EventCard id={event.id} title={event.title} assignee={event.assignee} project={event.project} status={event.status} />
+          <EventCard
+            id={event.id}
+            title={event.title}
+            assignee={event.assignee} // ✅ safe: still exists in `events`
+            project={event.project}   // ✅ safe: still exists in `events`
+            status={event.status}
+          />
         ),
         toolbar: () => <CustomToolbar date={value} onNavigate={handleNavigate} />,
       }}
