@@ -58,8 +58,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
     title: task.name,
-    project: task.project,     // ✅ full Project object (not just ID)
-    assignee: task.assignee,   // ✅ full Member object (not just ID)
+    project: task.projectId,     // ✅ full Project object (not just ID)
+    assignee: task.assigneeId,   // ✅ full Member object (not just ID)
     status: task.status,
     id: task.$id,
   }));
@@ -99,3 +99,4 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     />
   );
 };
+
