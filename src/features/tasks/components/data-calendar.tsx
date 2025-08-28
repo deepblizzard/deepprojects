@@ -7,6 +7,8 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 
 import { Button } from '@/components/ui/button';
 import type { Task } from '@/features/tasks/types';
+import type { Member } from '@/features/members/types';
+import type { Project } from '@/features/projects/types';
 
 import './data-calendar.css';
 import { EventCard } from './event-card';
@@ -54,12 +56,14 @@ const CustomToolbar = ({ date, onNavigate }: CustomToolbarProps) => {
 export const DataCalendar = ({ data }: DataCalendarProps) => {
   const [value, setValue] = useState(data.length > 0 ? new Date(data[0].dueDate) : new Date());
 
+  // 🔑 FIX: use task.assignee (Member object) and task.project (Project object),
+  // not just their IDs.
   const events = data.map((task) => ({
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
     title: task.name,
-    project: task.projectId,   // ✅ keep as "project"
-    assignee: task.assigneeId, // ✅ keep as "assignee"
+    project: task.project as Project,     // ✅ full object
+    assignee: task.assignee as Member,   // ✅ full object
     status: task.status,
     id: task.$id,
   }));
@@ -89,8 +93,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
           <EventCard
             id={event.id}
             title={event.title}
-            assignee={event.assignee} // ✅ matches EventCardProps
-            project={event.project}   // ✅ matches EventCardProps
+            assignee={event.assignee} // ✅ now Member object
+            project={event.project}   // ✅ now Project object
             status={event.status}
           />
         ),
