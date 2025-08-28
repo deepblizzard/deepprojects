@@ -81,7 +81,7 @@ export const TaskList = ({ data, total }: TaskListProps) => {
 
                     <div className="flex items-center gap-x-2">
                       {/* Safely guard access to project to avoid TypeScript error */}
-                      <p>{('project' in task && task.project?.name) ?? 'No Project'}</p>
+                      <p>{(task.project as { name: string } | undefined)?.name ?? 'No Project'}</p>
 
                       <div aria-hidden className="size-1 rounded-full bg-neutral-300" />
 
