@@ -41,7 +41,7 @@ export const WorkspaceIdClient = () => {
       <Analytics data={workspaceAnalytics} />
 
       <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
-        <TaskList data={tasks.documents.slice(0, 4)} total={tasks.total} />
+        <TaskList data={tasks.documents.slice(0, 4)} total={tasks.total} projects={projects.documents} />
         <ProjectList data={projects.documents} total={projects.total} />
         <MemberList data={members.documents} total={members.total} />
       </div>
@@ -52,9 +52,10 @@ export const WorkspaceIdClient = () => {
 interface TaskListProps {
   data: Task[];
   total: number;
+  projects: Project[];
 }
 
-export const TaskList = ({ data, total }: TaskListProps) => {
+export const TaskList = ({ data, total, projects }: TaskListProps) => {
   const workspaceId = useWorkspaceId();
   const { open: createTask } = useCreateTaskModal();
 
@@ -72,31 +73,38 @@ export const TaskList = ({ data, total }: TaskListProps) => {
         <DottedSeparator className="my-4" />
 
         <ul className="flex flex-col gap-y-4">
-          {data.map((task) => (
-            <li key={task.$id}>
-              <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
-                <Card className="rounded-lg shadow-none transition hover:opacity-75">
-                  <CardContent className="p-4">
-                    <p className="truncate text-lg font-medium">{task.name}</p>
+          {data.map((task) => {
+            const project = projects.find((p) => p.$id === task.projectId);
 
-                    <div className="flex items-center gap-x-2">
-                      {/* Safely guard access to project to avoid TypeScript error */}
-                      <p>{(task.project as { name: string } | undefined)?.name ?? 'No Project'}</p>
+            return (
+              <li key={task.$id}>
+                <Link href={`/workspaces/${workspaceId}/tasks/${task.$id}`}>
+                  <Card className="rounded-lg shadow-none transition hover:opacity-75">
+                    <CardContent className="p-4">
+                      <p className="truncate text-lg font-medium">{task.name}</p>
 
-                      <div aria-hidden className="size-1 rounded-full bg-neutral-300" />
+                      <div className="flex items-center gap-x-2">
+                        <p>{project?.name ?? 'No Project'}</p>
 
-                      <div className="flex items-center text-sm text-muted-foreground">
-                        <CalendarIcon className="mr-1 size-3" />
-                        <span className="truncate">{formatDistanceToNow(new Date(task.dueDate))}</span>
+                        <div aria-hidden className="size-1 rounded-full bg-neutral-300" />
+
+                        <div className="flex items-center text-sm text-muted-foreground">
+                          <CalendarIcon className="mr-1 size-3" />
+                          <span className="truncate">
+                            {formatDistanceToNow(new Date(task.dueDate))}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            </li>
-          ))}
+                    </CardContent>
+                  </Card>
+                </Link>
+              </li>
+            );
+          })}
 
-          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">No tasks found.</li>
+          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
+            No tasks found.
+          </li>
         </ul>
 
         <Button variant="muted" className="mt-4 w-full" asChild>
@@ -143,7 +151,9 @@ export const ProjectList = ({ data, total }: ProjectListProps) => {
             </li>
           ))}
 
-          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">No projects found.</li>
+          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
+            No projects found.
+          </li>
         </ul>
       </div>
     </div>
@@ -189,7 +199,9 @@ export const MemberList = ({ data, total }: MemberListProps) => {
             </li>
           ))}
 
-          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">No members found.</li>
+          <li className="hidden text-center text-sm text-muted-foreground first-of-type:block">
+            No members found.
+          </li>
         </ul>
       </div>
     </div>
