@@ -89,8 +89,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
           <EventCard
             id={event.id}
             title={event.title}
-            assignee={event.assignee} // ✅ Member type now matches
-            project={event.project}   // ✅ Project type now matches
+            assignee={event.assigneeId} // ✅ Member type now matches
+            project={event.projectId}   // ✅ Project type now matches
             status={event.status}
           />
         ),
@@ -99,4 +99,5 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     />
   );
 };
+
 
