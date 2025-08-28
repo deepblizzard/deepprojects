@@ -58,8 +58,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
     title: task.name,
-    project: task.projectId,   // ✅ use projectId but still call it "project"
-    assignee: task.assigneeId, // ✅ use assigneeId but still call it "assignee"
+    project: task.project,     // ✅ full Project object (not just ID)
+    assignee: task.assignee,   // ✅ full Member object (not just ID)
     status: task.status,
     id: task.$id,
   }));
@@ -89,8 +89,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
           <EventCard
             id={event.id}
             title={event.title}
-            assignee={event.assignee} // ✅ safe: still exists in `events`
-            project={event.project}   // ✅ safe: still exists in `events`
+            assignee={event.assignee} // ✅ Member type now matches
+            project={event.project}   // ✅ Project type now matches
             status={event.status}
           />
         ),
