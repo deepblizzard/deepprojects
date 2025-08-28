@@ -5,7 +5,6 @@ import { ArrowUpDown, MoreVertical } from 'lucide-react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { MemberAvatar } from '@/features/members/components/member-avatar';
 import { ProjectAvatar } from '@/features/projects/components/project-avatar';
 import type { Task } from '@/features/tasks/types';
 import { snakeCaseToTitleCase } from '@/lib/utils';
@@ -16,17 +15,15 @@ import { TaskDate } from './task-date';
 export const columns: ColumnDef<Task>[] = [
   {
     accessorKey: 'name',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Task Name
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Task Name
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
       const name = row.original.name;
       return <p className="line-clamp-1">{name}</p>;
@@ -34,22 +31,17 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'projectId',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Project
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Project
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
       const projectId = row.original.projectId;
-
-      // Right now we only have projectId, so just display it
-      // (If you want name/image, you need to populate Task with a `project` relation)
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
           <ProjectAvatar className="size-6" name={projectId} />
@@ -59,45 +51,36 @@ export const columns: ColumnDef<Task>[] = [
     },
   },
   {
-    accessorKey: 'assignee',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Assignee
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    accessorKey: 'assigneeId',
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Assignee
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
-      const assignee = row.original.assignee;
+      const assigneeId = row.original.assigneeId;
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <MemberAvatar
-            fallbackClassName="text-xs"
-            className="size-6"
-            name={assignee.name}
-          />
-          <p className="line-clamp-1">{assignee.name}</p>
+          <p className="line-clamp-1">{assigneeId}</p>
         </div>
       );
     },
   },
   {
     accessorKey: 'dueDate',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Due Date
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Due Date
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
       const dueDate = row.original.dueDate;
       return <TaskDate value={dueDate} />;
@@ -105,17 +88,15 @@ export const columns: ColumnDef<Task>[] = [
   },
   {
     accessorKey: 'status',
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </Button>
-      );
-    },
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
+        Status
+        <ArrowUpDown className="ml-2 h-4 w-4" />
+      </Button>
+    ),
     cell: ({ row }) => {
       const status = row.original.status;
       return <Badge variant={status}>{snakeCaseToTitleCase(status)}</Badge>;
