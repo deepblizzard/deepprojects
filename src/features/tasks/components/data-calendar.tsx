@@ -54,12 +54,13 @@ const CustomToolbar = ({ date, onNavigate }: CustomToolbarProps) => {
 export const DataCalendar = ({ data }: DataCalendarProps) => {
   const [value, setValue] = useState(data.length > 0 ? new Date(data[0].dueDate) : new Date());
 
+  // ✅ Use assigneeId + projectId consistently
   const events = data.map((task) => ({
     start: new Date(task.dueDate),
     end: new Date(task.dueDate),
     title: task.name,
-    project: task.projectId,     // ✅ full Project object (not just ID)
-    assignee: task.assigneeId,   // ✅ full Member object (not just ID)
+    projectId: task.projectId,
+    assigneeId: task.assigneeId,
     status: task.status,
     id: task.$id,
   }));
@@ -89,8 +90,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
           <EventCard
             id={event.id}
             title={event.title}
-            assignee={event.assigneeId} // ✅ Member type now matches
-            project={event.projectId}   // ✅ Project type now matches
+            assigneeId={event.assigneeId} // ✅ consistent with events mapping
+            projectId={event.projectId}   // ✅ consistent with events mapping
             status={event.status}
           />
         ),
@@ -99,5 +100,3 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
     />
   );
 };
-
-
