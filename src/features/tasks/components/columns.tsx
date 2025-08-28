@@ -18,7 +18,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: 'name',
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Task Name
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -26,28 +29,31 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const name = row.original.name;
-
       return <p className="line-clamp-1">{name}</p>;
     },
   },
   {
-    accessorKey: 'project',
+    accessorKey: 'projectId',
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Project
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
     },
     cell: ({ row }) => {
-      const project = row.original.project;
+      const projectId = row.original.projectId;
 
+      // Right now we only have projectId, so just display it
+      // (If you want name/image, you need to populate Task with a `project` relation)
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <ProjectAvatar className="size-6" name={project.name} image={project.imageUrl} />
-
-          <p className="line-clamp-1">{project.name}</p>
+          <ProjectAvatar className="size-6" name={projectId} />
+          <p className="line-clamp-1">{projectId}</p>
         </div>
       );
     },
@@ -56,7 +62,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: 'assignee',
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Assignee
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -64,11 +73,13 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const assignee = row.original.assignee;
-
       return (
         <div className="flex items-center gap-x-2 text-sm font-medium">
-          <MemberAvatar fallbackClassName="text-xs" className="size-6" name={assignee.name} />
-
+          <MemberAvatar
+            fallbackClassName="text-xs"
+            className="size-6"
+            name={assignee.name}
+          />
           <p className="line-clamp-1">{assignee.name}</p>
         </div>
       );
@@ -78,7 +89,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: 'dueDate',
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Due Date
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -86,7 +100,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const dueDate = row.original.dueDate;
-
       return <TaskDate value={dueDate} />;
     },
   },
@@ -94,7 +107,10 @@ export const columns: ColumnDef<Task>[] = [
     accessorKey: 'status',
     header: ({ column }) => {
       return (
-        <Button variant="ghost" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Status
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
@@ -102,7 +118,6 @@ export const columns: ColumnDef<Task>[] = [
     },
     cell: ({ row }) => {
       const status = row.original.status;
-
       return <Badge variant={status}>{snakeCaseToTitleCase(status)}</Badge>;
     },
   },
